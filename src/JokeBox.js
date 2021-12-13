@@ -70,10 +70,10 @@ class JokeBox extends Component{
     render() {
         return (
             <div className="JokeBox">
-                <div className="JokeBox-btnDiv">
-                    <h1 className="heading">DAD JOKES</h1>
+                <div className="JokeBox-sidebar">
+                    <h1 className="heading">Dad <span>Jokes</span></h1>
                         <i className="em-svg em-joy smiley"></i>
-                    <button onClick={this.handleClick}>New Jokes</button>
+                    <button className="getMore-btn" onClick={this.handleClick}>New Jokes</button>
                 </div>
                 <div className="JokeList">
                     {this.showJokes()}
