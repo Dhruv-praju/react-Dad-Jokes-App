@@ -2,13 +2,14 @@
     display: flex;
     width: 90%;
     justify-content: center;
-    margin: 5rem auto;
+    margin: 0rem auto;
+    padding-top: 6rem;
 }
 .JokeBox-btnDiv{
     width: 20rem;
     background-color:rgb(142 116 205);
     height: 750px;
-    box-shadow: 1px 4px 9px 0px #7d7d7dc9, 1px 6px 12px 3px #a3a3a36e, 1px 8px 20px 8px #cfcfcf;
+    box-shadow: 1px 2px 11px 0px #0e0e0e42, 1px 3px 10px 0px #2929298a, 1px 5px 20px 5px #434343a3;
     z-index: 1;
 }
 .JokeList{
@@ -17,7 +18,7 @@
     background-color: #f5f5f5;
     overflow: auto;
     margin: auto;
-    box-shadow: 1px 4px 9px 0px #7d7d7dc9, 1px 6px 12px 3px #a3a3a36e, 1px 8px 20px 8px #cfcfcf;
+    box-shadow: 1px 2px 11px 0px #0e0e0e42, 1px 3px 10px 0px #2929298a, 1px 5px 20px 5px #434343a3;
 }
 
 .heading{
