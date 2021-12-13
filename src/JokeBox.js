@@ -56,6 +56,8 @@ class JokeBox extends Component{
         return (
             <div className="JokeBox">
                 <div className="JokeBox-btnDiv">
+                    <h1 className="heading">DAD JOKES</h1>
+                        <i class="em-svg em-joy smiley" aria-role="presentation" aria-label="FACE WITH TEARS OF JOY"></i>
                     <button onClick={this.handleClick}>New Jokes</button>
                 </div>
                 <div className="JokeList">
