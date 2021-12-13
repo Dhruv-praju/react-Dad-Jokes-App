@@ -9,7 +9,7 @@ class JokeBox extends Component{
         jokes:[]
     }
     showJokes(){
-        return this.state.jokes.map(j => <Joke key={j.id} text={j.joke}/>)
+        return this.state.jokes.map(j => <Joke key={j.id} id={j.id} text={j.joke} score={j.score} upVote={this.upVote} downVote={this.downVote}/>)
     }
     saveToLocalStorage(jokes){
         const n = localStorage.length
@@ -33,10 +33,8 @@ class JokeBox extends Component{
     async componentDidMount(){
         // fetch 10 jokes as user refreshes
 
-            const jokes = await this.fetchNewJokes()
-            // save to local storage
-            // this.saveToLocalStorage(jokes)
-            
+            const jokes = (await this.fetchNewJokes()).map(j =>( {...j,score:0}) )
+
             this.setState(st => ({
                 page: st.page+1,
                 jokes: jokes
@@ -45,19 +43,36 @@ class JokeBox extends Component{
     }
     handleClick = async ()=>{
         // fetch new jokes
-        const newJokes = await this.fetchNewJokes()
+        const newJokes = (await this.fetchNewJokes()).map(j =>( {...j,score:0}) )
 
         this.setState(st=>({
             page:  st.page + 1,
             jokes: [...st.jokes, ...newJokes]
         }))
     }
+    upVote = (id)=>{
+
+        const newJokes = this.state.jokes.map(j=>{
+            if(j.id===id) j.score = j.score+1
+            return j
+        })
+
+        this.setState({jokes: newJokes})
+    }
+    downVote = (id)=>{
+        const newJokes = this.state.jokes.map(j=>{
+            if(j.id===id) j.score = j.score-1
+            return j
+        })
+
+        this.setState({jokes: newJokes})
+    }
     render() {
         return (
             <div className="JokeBox">
                 <div className="JokeBox-btnDiv">
                     <h1 className="heading">DAD JOKES</h1>
-                        <i class="em-svg em-joy smiley" aria-role="presentation" aria-label="FACE WITH TEARS OF JOY"></i>
+                        <i className="em-svg em-joy smiley"></i>
                     <button onClick={this.handleClick}>New Jokes</button>
                 </div>
                 <div className="JokeList">

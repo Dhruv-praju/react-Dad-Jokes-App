@@ -2,21 +2,14 @@ import { Component } from "react";
 import './Joke.css'
 
 class Joke extends Component{
-    state = {
-        score:0
+    handleUpVote = ()=>{
+        this.props.upVote(this.props.id)
     }
-    upVote = ()=>{
-        this.setState(st=>{
-            return {score: st.score+1}
-        })
-    }
-    downVote = ()=>{
-        this.setState(st=>{
-            return {score: st.score-1}
-        })
+    handleDownVote = ()=>{
+        this.props.downVote(this.props.id)
     }
     getColor(){
-        const {score} = this.state
+        const {score} = this.props
         if(score>=14) return '#4CAF50'
         else if(score >= 12) return '#8BC34A' 
         else if(score >= 9) return '#CDDC39' 
@@ -26,7 +19,7 @@ class Joke extends Component{
         else  return '#F44336' 
     }
     getEmoji(){
-        const {score} = this.state
+        const {score} = this.props
         if(score>=11) return 'em-rolling_on_the_floor_laughing'
         else if(score >= 8) return 'em-laughing' 
         else if(score >= 6) return 'em-grinning' 
@@ -39,12 +32,12 @@ class Joke extends Component{
         return (
             <div className="Joke">
                 <div className="Joke-VoteArea">
-                    <i class="fas fa-arrow-up" onClick={this.upVote}></i>
-                    <div className="circle" style={{border: `3px solid ${this.getColor()}`}}>{this.state.score}</div>
-                    <i class="fas fa-arrow-down" onClick={this.downVote}></i>
+                    <i className="fas fa-arrow-up" onClick={this.handleUpVote}></i>
+                    <div className="circle" style={{border: `3px solid ${this.getColor()}`}}>{this.props.score}</div>
+                    <i className="fas fa-arrow-down" onClick={this.handleDownVote}></i>
                 </div>
                 <p className="Joke-Text">{this.props.text}</p>
-                <i class={`em ${this.getEmoji()} Joke-Emoji`} aria-role="presentation" aria-label="HUSHED FACE"></i>
+                <i className={`em ${this.getEmoji()} Joke-Emoji`}></i>
             </div>
         )
     }
