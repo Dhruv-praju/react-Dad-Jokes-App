@@ -1,0 +1,32 @@
+.Joke{
+    display: flex;
+    margin: -1.8rem 1rem;
+}
+.Joke-VoteArea{
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+.Joke-VoteArea .fas{
+    font-size: 1.4em;
+}
+.Joke-VoteArea .fas:hover{
+    cursor: pointer;
+}
+.circle {
+    background: lightblue;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    margin: 0 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Joke-Text{
+    margin: auto;
+}
+.Joke-Emoji{
+    font-size: 3rem;
+    margin-left: 1rem;
+}

@@ -1,0 +1,19 @@
+.JokeBox {
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    margin: 5rem auto;
+}
+.JokeBox-btnDiv{
+    width: 20rem;
+    background-color: darkorchid;
+    height: 750px;
+
+}
+.JokeList{
+    height: 700px;
+    width: 52rem;
+    background-color: cadetblue;
+    overflow: auto;
+    margin: auto;
+}
