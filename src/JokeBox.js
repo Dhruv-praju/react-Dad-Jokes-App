@@ -19,17 +19,23 @@ class JokeBox extends Component{
     }
     async fetchNewJokes(){
         // fetches 10 new jokes and return its array
-        let config = {
-            headers:{
-                'Accept':'application/json'
-            },
-            params:{
-                limit:10,
-                page:(this.state.page+1)
+        try {
+            let config = {
+                headers:{
+                    'Accept':'application/json'
+                },
+                params:{
+                    limit:10,
+                    page:(this.state.page+1)
+                }
             }
+            const response = await axios.get('https://icanhazdadjoke.com/search', config)
+            return response.data.results
+
+        } catch (e) {
+            alert('ERROR : '+e)
+            throw e
         }
-        const response = await axios.get('https://icanhazdadjoke.com/search', config)
-        return response.data.results
 
     }
     async componentDidMount(){
@@ -43,12 +49,11 @@ class JokeBox extends Component{
                     jokes: jokes
                 }))
             
-            // save it to local storage
-            window.localStorage.setItem('jokes', JSON.stringify(jokes))
+                // save it to local storage
+                window.localStorage.setItem('jokes', JSON.stringify(jokes))                
                 
             } catch (e) {
-                // alert('')
-                console.log('ERROR!!!!!  '+e);
+                alert('SORRY FOR NO JOKES!, PLEASE CHECK INTERNET CONNECTION')
             }
     
         } 
