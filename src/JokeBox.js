@@ -1,19 +1,21 @@
 import { Component } from "react";
+import {v4 as uuid} from 'uuid'
 import axios from 'axios'
 import Joke from "./Joke";
 import './JokeBox.css'
 
 class JokeBox extends Component{
-    state = {
-        page:0,
-        jokes:[]
+    constructor(props){
+        super(props)
+        
+        this.state = {
+            page:0,
+            jokes: JSON.parse(window.localStorage.getItem('jokes') || '[]')    // load jokes if they are present in local storage
+        }
+
     }
     showJokes(){
         return this.state.jokes.map(j => <Joke key={j.id} id={j.id} text={j.joke} score={j.score} upVote={this.upVote} downVote={this.downVote}/>)
-    }
-    saveToLocalStorage(jokes){
-        const n = localStorage.length
-        jokes.forEach((j,idx) => localStorage.setItem(idx+n, JSON.stringify(j)))
     }
     async fetchNewJokes(){
         // fetches 10 new jokes and return its array
@@ -31,19 +33,29 @@ class JokeBox extends Component{
 
     }
     async componentDidMount(){
-        // fetch 10 jokes as user refreshes
-
-            const jokes = (await this.fetchNewJokes()).map(j =>( {...j,score:0}) )
-
-            this.setState(st => ({
-                page: st.page+1,
-                jokes: jokes
-            }))
-        
+        if(! this.state.jokes.length){     // if their are no jokes
+            try {
+                // fetch 10 jokes as user refreshes
+                const jokes = (await this.fetchNewJokes()).map(j =>( {...j, id:uuid(), score:0}) )
+    
+                this.setState(st => ({
+                    page: st.page+1,
+                    jokes: jokes
+                }))
+            
+            // save it to local storage
+            window.localStorage.setItem('jokes', JSON.stringify(jokes))
+                
+            } catch (e) {
+                // alert('')
+                console.log('ERROR!!!!!  '+e);
+            }
+    
+        } 
     }
     handleClick = async ()=>{
         // fetch new jokes
-        const newJokes = (await this.fetchNewJokes()).map(j =>( {...j,score:0}) )
+        const newJokes = (await this.fetchNewJokes()).map(j =>( {...j, id:uuid(), score:0}) )
 
         this.setState(st=>({
             page:  st.page + 1,
@@ -66,6 +78,10 @@ class JokeBox extends Component{
         })
 
         this.setState({jokes: newJokes})
+    }
+    componentDidUpdate(){
+        // sync local storage with current state of jokes
+        window.localStorage.setItem('jokes', JSON.stringify(this.state.jokes))
     }
     render() {
         return (

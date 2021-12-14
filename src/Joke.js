@@ -10,11 +10,11 @@ class Joke extends Component{
     }
     getColor(){
         const {score} = this.props
-        if(score>=14) return '#4CAF50'
-        else if(score >= 12) return '#8BC34A' 
-        else if(score >= 9) return '#CDDC39' 
-        else if(score >= 6) return '#FFEB3B' 
-        else if(score >= 3) return '#FFC107' 
+        if(score>=10) return '#4CAF50'
+        else if(score >= 8) return '#8BC34A' 
+        else if(score >= 6) return '#CDDC39' 
+        else if(score >= 4) return '#FFEB3B' 
+        else if(score >= 2) return '#FFC107' 
         else if(score >= 0) return '#FF9800' 
         else  return '#F44336' 
     }
@@ -25,7 +25,7 @@ class Joke extends Component{
         else if(score >= 6) return 'em-grinning' 
         else if(score >= 2) return 'em-slightly_smiling_face' 
         else if(score >= 0) return  'em-neutral_face'
-        else if(score >= -2) return 'em-slightly_frowning_face'
+        else if(score >= -2) return 'em-confused'
         else  return 'em-angry' 
     }
     render() {
