@@ -4,6 +4,10 @@ import axios from 'axios'
 import Joke from "./Joke";
 import './JokeBox.css'
 
+/**
+ * if no jokes in local storage, then fetch jokes from API.
+ * if their are jokes in Local storage, then use those
+ */
 class JokeBox extends Component{
     constructor(props){
         super(props)
