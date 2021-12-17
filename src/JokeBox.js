@@ -14,7 +14,8 @@ class JokeBox extends Component{
         
         this.state = {
             page:0,
-            jokes: JSON.parse(window.localStorage.getItem('jokes') || '[]')    // load jokes if they are present in local storage
+            jokes: JSON.parse(window.localStorage.getItem('jokes') || '[]'),    // load jokes if they are present in local storage
+            loading: false
         }
 
     }
@@ -34,7 +35,8 @@ class JokeBox extends Component{
                 }
             }
             const response = await axios.get('https://icanhazdadjoke.com/search', config)
-            return response.data.results
+            const jokes = response.data.results
+            return jokes.map(j =>( {...j, id:uuid(), score:0}) )
 
         } catch (e) {
             alert('ERROR : '+e)
@@ -45,12 +47,14 @@ class JokeBox extends Component{
     async componentDidMount(){
         if(! this.state.jokes.length){     // if their are no jokes
             try {
+                this.setState({loading: true})
                 // fetch 10 jokes as user refreshes
-                const jokes = (await this.fetchNewJokes()).map(j =>( {...j, id:uuid(), score:0}) )
+                const jokes = await this.fetchNewJokes()
     
                 this.setState(st => ({
                     page: st.page+1,
-                    jokes: jokes
+                    jokes: jokes,
+                    loading: false
                 }))
             
                 // save it to local storage
@@ -63,12 +67,14 @@ class JokeBox extends Component{
         } 
     }
     handleClick = async ()=>{
+        this.setState({loading: true})
         // fetch new jokes
-        const newJokes = (await this.fetchNewJokes()).map(j =>( {...j, id:uuid(), score:0}) )
+        const newJokes = await this.fetchNewJokes()
 
         this.setState(st=>({
             page:  st.page + 1,
-            jokes: [...st.jokes, ...newJokes]
+            jokes: [...st.jokes, ...newJokes],
+            loading: false
         }))
     }
     upVote = (id)=>{
@@ -101,7 +107,15 @@ class JokeBox extends Component{
                     <button className="getMore-btn" onClick={this.handleClick}>New Jokes</button>
                 </div>
                 <div className="JokeList">
-                    {this.showJokes()}
+                    
+                    {(this.state.loading) 
+                    ? 
+                    <div className="JokeBox-spinner">
+                        <i className="far fa-5x fa-laugh fa-spin"/>
+                        <h1 className="">Loading...</h1>
+                    </div>
+                     : 
+                     this.showJokes()}
                 </div>
             </div>
         )
